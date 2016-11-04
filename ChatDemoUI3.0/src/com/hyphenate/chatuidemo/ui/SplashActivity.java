@@ -2,6 +2,7 @@ package com.hyphenate.chatuidemo.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.animation.AlphaAnimation;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -35,7 +36,10 @@ public class SplashActivity extends BaseActivity {
 	@Override
 	protected void onStart() {
 		super.onStart();
+		Log.i("a", "onStart: ");
 
+
+		
 		new Thread(new Runnable() {
 			public void run() {
 				if (DemoHelper.getInstance().isLoggedIn()) {
