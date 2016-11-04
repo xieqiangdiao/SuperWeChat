@@ -16,28 +16,28 @@
         android:layout_weight="1" >
 
         <ImageView
-            android:id="@+id/iv_login_title"
+            android:id="@+id/img_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_centerInParent="true"
             android:src="@drawable/back" />
         <TextView
-            android:id="@+id/tvlogin"
+            android:id="@+id/tv_login"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:layout_toRightOf="@id/iv_login_title"
+            android:layout_toRightOf="@id/img_back"
             android:text="账户登录"
             android:textSize="20dp" />
     </RelativeLayout>
+
     <EditText
         android:id="@+id/et_UserName"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:layout_below="@id/rv"
         android:hint="用户名" />
 
     <ImageView

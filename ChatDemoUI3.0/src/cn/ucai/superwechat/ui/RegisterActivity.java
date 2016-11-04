@@ -173,6 +173,8 @@ public class RegisterActivity extends BaseActivity {
                         }
                     });
                 } catch (final HyphenateException e) {
+                    //
+                    unreqisterAppServer();
                     runOnUiThread(new Runnable() {
                         public void run() {
                             if (!RegisterActivity.this.isFinishing())
