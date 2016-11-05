@@ -98,7 +98,7 @@ public class SuperWeChatHelper {
     private SuperWeChatModel demoModel = null;
 
     private User currentUser = null;
-    private Map<String,User> appContactList;
+    private Map<String, User> appContactList;
     /**
      * sync groups status listener
      */
@@ -733,6 +733,7 @@ public class SuperWeChatHelper {
         }
         return user;
     }
+
     private User getAppUserInfo(String username) {
         // To get instance of EaseUser, here we get it from the user list in memory
         // You'd better cache it if you get it from your server
@@ -1269,9 +1270,9 @@ public class SuperWeChatHelper {
 
     public User getCurrentUser() {
         if (currentUser == null) {
-            String username=EMClient.getInstance().getCurrentUser();
-            L.e(TAG,"getCurrentUsername="+username);
-            currentUser=new User(username);
+            String username = EMClient.getInstance().getCurrentUser();
+            L.e(TAG, "getCurrentUsername=" + username);
+            currentUser = new User(username);
         }
         return currentUser;
     }
@@ -1279,7 +1280,6 @@ public class SuperWeChatHelper {
     public void setCurrentUser(User currentUser) {
         this.currentUser = currentUser;
     }
-
 
 
     /**
@@ -1312,7 +1312,7 @@ public class SuperWeChatHelper {
      * @return
      */
     public Map<String, User> getAppContactList() {
-        if (isLoggedIn() && appContactList == null) {
+        if (isLoggedIn() && appContactList == null || appContactList.size() == 0) {
             appContactList = demoModel.getAppContactList();
         }
 
