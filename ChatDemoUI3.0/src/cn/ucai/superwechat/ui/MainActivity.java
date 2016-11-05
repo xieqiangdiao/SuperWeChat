@@ -15,6 +15,7 @@ package cn.ucai.superwechat.ui;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
+import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -24,13 +25,13 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.PowerManager;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.LocalBroadcastManager;
+import android.support.v4.view.ViewPager;
 import android.view.KeyEvent;
 import android.view.View;
-import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,15 +45,6 @@ import com.hyphenate.chat.EMCmdMessageBody;
 import com.hyphenate.chat.EMConversation;
 import com.hyphenate.chat.EMConversation.EMConversationType;
 import com.hyphenate.chat.EMMessage;
-
-import cn.ucai.superwechat.Constant;
-import cn.ucai.superwechat.SuperWeChatHelper;
-import cn.ucai.superwechat.R;
-import cn.ucai.superwechat.db.InviteMessgeDao;
-import cn.ucai.superwechat.db.UserDao;
-import cn.ucai.superwechat.runtimepermissions.PermissionsManager;
-import cn.ucai.superwechat.runtimepermissions.PermissionsResultAction;
-
 import com.hyphenate.easeui.utils.EaseCommonUtils;
 import com.hyphenate.util.EMLog;
 import com.umeng.analytics.MobclickAgent;
@@ -60,8 +52,21 @@ import com.umeng.update.UmengUpdateAgent;
 
 import java.util.List;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
+import cn.ucai.superwechat.Constant;
+import cn.ucai.superwechat.R;
+import cn.ucai.superwechat.SuperWeChatHelper;
+import cn.ucai.superwechat.adapter.MainTabAdpter;
+import cn.ucai.superwechat.db.InviteMessgeDao;
+import cn.ucai.superwechat.db.UserDao;
+import cn.ucai.superwechat.runtimepermissions.PermissionsManager;
+import cn.ucai.superwechat.runtimepermissions.PermissionsResultAction;
+import cn.ucai.superwechat.widget.DMTabHost;
+import cn.ucai.superwechat.widget.MFViewPager;
+
 @SuppressLint("NewApi")
-public class MainActivity extends BaseActivity {
+public class MainActivity extends BaseActivity implements DMTabHost.OnCheckedChangeListener, ViewPager.OnPageChangeListener {
 
     protected static final String TAG = "MainActivity";
     //	// textview for unread message count
@@ -76,8 +81,17 @@ public class MainActivity extends BaseActivity {
 //	private int currentTabIndex;
 //	// user logged into another device
     public boolean isConflict = false;
+    @Bind(R.id.iv_back)
+    ImageView ivBack;
+    @Bind(R.id.tv_Common_title)
+    TextView tvCommonTitle;
+    @Bind(R.id.layout_viewpage)
+    MFViewPager layoutViewpage;
+    @Bind(R.id.layout_table_host)
+    DMTabHost layoutTableHost;
     // user account was removed
     private boolean isCurrentAccountRemoved = false;
+    MainTabAdpter adapter;
 
 
     /**
@@ -95,6 +109,7 @@ public class MainActivity extends BaseActivity {
         checkLogined(savedInstanceState);
 
         setContentView(R.layout.em_activity_main);
+        ButterKnife.bind(this);
         // runtime permission for android 6.0, just require all permissions here for simple
         requestPermissions();
 
@@ -102,7 +117,7 @@ public class MainActivity extends BaseActivity {
 
         umeng();
 
-       checkAccount();
+        checkAccount();
 
         inviteMessgeDao = new InviteMessgeDao(this);
         UserDao userDao = new UserDao(this);
@@ -140,6 +155,7 @@ public class MainActivity extends BaseActivity {
         UmengUpdateAgent.update(this);
 
     }
+
     private void checkLogined(Bundle savedInstanceState) {
         //make sure activity will not in background if user is logged into another device or removed
         if (savedInstanceState != null && savedInstanceState.getBoolean(Constant.ACCOUNT_REMOVED, false)) {
@@ -152,7 +168,7 @@ public class MainActivity extends BaseActivity {
             startActivity(new Intent(this, LoginActivity.class));
             return;
         }
-        }
+    }
 
 
     private void savePower() {
@@ -161,7 +177,7 @@ public class MainActivity extends BaseActivity {
             PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
             if (!pm.isIgnoringBatteryOptimizations(packageName)) {
                 Intent intent = new Intent();
-                intent.setAction(android.provider.Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS);
+                intent.setAction(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS);
                 intent.setData(Uri.parse("package:" + packageName));
                 startActivity(intent);
             }
@@ -195,8 +211,21 @@ public class MainActivity extends BaseActivity {
 //        mTabs[2] = (Button) findViewById(R.id.btn_setting);
 //        // select first tab
 //        mTabs[0].setSelected(true);
+        ivBack.setVisibility(View.VISIBLE);
+        tvCommonTitle.setVisibility(View.VISIBLE);
+        adapter = new MainTabAdpter(getSupportFragmentManager());
+        adapter.clear();
+        layoutViewpage.setAdapter(adapter);
+        layoutViewpage.setOffscreenPageLimit(4);
+        adapter.addFragment(new ConversationListFragment(), getString(R.string.app_name));
+        adapter.addFragment(new ContactListFragment(), getString(R.string.contacts));
+        adapter.addFragment(new DiscoverFragment(), getString(R.string.discover));
+        adapter.addFragment(new SettingsFragment(), getString(R.string.me));
+        adapter.notifyDataSetChanged();
+        layoutTableHost.setChecked(0);
+        layoutTableHost.setOnCheckedChangeListener(this);
+        layoutViewpage.setOnPageChangeListener(this);
     }
-
 
 
     EMMessageListener messageListener = new EMMessageListener() {
@@ -297,6 +326,28 @@ public class MainActivity extends BaseActivity {
         broadcastManager.registerReceiver(broadcastReceiver, intentFilter);
     }
 
+    @Override
+    public void onCheckedChange(int checkedPosition, boolean byUser) {
+        layoutViewpage.setCurrentItem(checkedPosition, false);
+
+    }
+
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+    }
+
+    @Override
+    public void onPageSelected(int position) {
+        layoutTableHost.setChecked(position);
+        layoutViewpage.setCurrentItem(position);
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) {
+
+    }
+
     public class MyContactListener implements EMContactListener {
         @Override
         public void onContactAdded(String username) {
@@ -376,7 +427,7 @@ public class MainActivity extends BaseActivity {
 //                } else {
 //                    unreadAddressLable.setVisibility(View.INVISIBLE);
 //                }
-           }
+            }
         });
 
     }
@@ -452,8 +503,8 @@ public class MainActivity extends BaseActivity {
         return super.onKeyDown(keyCode, event);
     }
 
-    private android.app.AlertDialog.Builder conflictBuilder;
-    private android.app.AlertDialog.Builder accountRemovedBuilder;
+    private AlertDialog.Builder conflictBuilder;
+    private AlertDialog.Builder accountRemovedBuilder;
     private boolean isConflictDialogShow;
     private boolean isAccountRemovedDialogShow;
     private BroadcastReceiver internalDebugReceiver;
@@ -472,7 +523,7 @@ public class MainActivity extends BaseActivity {
             // clear up global variables
             try {
                 if (conflictBuilder == null)
-                    conflictBuilder = new android.app.AlertDialog.Builder(MainActivity.this);
+                    conflictBuilder = new AlertDialog.Builder(MainActivity.this);
                 conflictBuilder.setTitle(st);
                 conflictBuilder.setMessage(R.string.connect_conflict);
                 conflictBuilder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
@@ -509,7 +560,7 @@ public class MainActivity extends BaseActivity {
             // clear up global variables
             try {
                 if (accountRemovedBuilder == null)
-                    accountRemovedBuilder = new android.app.AlertDialog.Builder(MainActivity.this);
+                    accountRemovedBuilder = new AlertDialog.Builder(MainActivity.this);
                 accountRemovedBuilder.setTitle(st5);
                 accountRemovedBuilder.setMessage(R.string.em_user_remove);
                 accountRemovedBuilder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
