@@ -1,6 +1,6 @@
 /**
  * Copyright (C) 2016 Hyphenate Inc. All rights reserved.
- * <p/>
+ * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -33,6 +33,7 @@ import android.widget.Toast;
 
 import com.hyphenate.EMCallBack;
 import com.hyphenate.chat.EMClient;
+import com.hyphenate.easeui.domain.User;
 import com.hyphenate.easeui.utils.EaseCommonUtils;
 
 import butterknife.Bind;
@@ -41,11 +42,14 @@ import butterknife.OnClick;
 import cn.ucai.superwechat.R;
 import cn.ucai.superwechat.SuperWeChatApplication;
 import cn.ucai.superwechat.SuperWeChatHelper;
+import cn.ucai.superwechat.bean.Result;
 import cn.ucai.superwechat.data.NetDao;
 import cn.ucai.superwechat.data.OkHttpUtils;
 import cn.ucai.superwechat.db.SuperWeChatManager;
+import cn.ucai.superwechat.db.UserDao;
 import cn.ucai.superwechat.utils.L;
 import cn.ucai.superwechat.utils.MFGT;
+import cn.ucai.superwechat.utils.ResultUtils;
 
 /**
  * Login screen
@@ -93,7 +97,7 @@ public class LoginActivity extends BaseActivity {
 
         setListener();
         initView();
-        mContext=this;
+        mContext = this;
     }
 //
 //        // if user changed, clear the password
@@ -230,12 +234,27 @@ public class LoginActivity extends BaseActivity {
         NetDao.login(mContext, currentUsername, currentPassword, new OkHttpUtils.OnCompleteListener<String>() {
             @Override
             public void onSuccess(String s) {
-                L.e(TAG,"s="+s);
-                loginSuccess();
+                L.e(TAG, "s=" + s);
+                if (s != null && s != "") {
+                    Result result = ResultUtils.getResultFromJson(s, User.class);
+                    if (result != null && result.isRetMsg()) {
+                        User user= (User) result.getRetData();
+                        if(user!=null){
+                            UserDao dao=new UserDao(mContext);
+                            dao.saveUser(user);
+                            SuperWeChatHelper.getInstance().setCurrentUser(user);
+                            loginSuccess();
+                        }
+                    }else{
+                        pd.dismiss();
+                        L.e(TAG,"login fail="+result);
+                    }
+                }
             }
             @Override
             public void onError(String error) {
-                L.e(TAG,"onError="+error);
+                L.e(TAG, "onError=" + error);
+                pd.dismiss();
             }
         });
         loginSuccess();
