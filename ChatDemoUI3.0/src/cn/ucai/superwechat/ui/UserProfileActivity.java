@@ -46,8 +46,8 @@ public class UserProfileActivity extends BaseActivity implements OnClickListener
     private static final int REQUESTCODE_CUTTING = 2;
     @Bind(R.id.iv_back)
     ImageView ivback;
-    @Bind(R.id.txt_title)
-    TextView txttitle;
+    @Bind(R.id.txt_user_title)
+    TextView txttuseritle;
     @Bind(R.id.user_head_avatar)
     ImageView userHeadAvatar;
     @Bind(R.id.ic_right_arrow)
@@ -72,8 +72,8 @@ public class UserProfileActivity extends BaseActivity implements OnClickListener
 
     private void initView() {
         ivback.setVisibility(View.VISIBLE);
-        txttitle.setVisibility(View.VISIBLE);
-        txttitle.setText(getString(R.string.title_user_profile));
+        txttuseritle.setVisibility(View.VISIBLE);
+        txttuseritle.setText(getString(R.string.title_user_profile));
     }
 
     private void initListener() {
