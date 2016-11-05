@@ -1,6 +1,6 @@
 /**
  * Copyright (C) 2016 Hyphenate Inc. All rights reserved.
- * <p>
+ * <p/>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -238,21 +238,22 @@ public class LoginActivity extends BaseActivity {
                 if (s != null && s != "") {
                     Result result = ResultUtils.getResultFromJson(s, User.class);
                     if (result != null && result.isRetMsg()) {
-                        User user= (User) result.getRetData();
-                        if(user!=null){
-                            UserDao dao=new UserDao(mContext);
+                        User user = (User) result.getRetData();
+                        if (user != null) {
+                            UserDao dao = new UserDao(mContext);
                             dao.saveUser(user);
                             SuperWeChatHelper.getInstance().setCurrentUser(user);
                             loginSuccess();
                         }
-                    }else{
+                    } else {
                         pd.dismiss();
-                        L.e(TAG,"login fail="+result);
+                        L.e(TAG, "login fail=" + result);
                     }
-                }else{
+                } else {
                     pd.dismiss();
                 }
             }
+
             @Override
             public void onError(String error) {
                 L.e(TAG, "onError=" + error);
@@ -301,6 +302,9 @@ public class LoginActivity extends BaseActivity {
         super.onResume();
         if (autoLogin) {
             return;
+        }
+        if (SuperWeChatHelper.getInstance().getCurrentUsernName() != null) {
+            etUserName.setText(SuperWeChatHelper.getInstance().getCurrentUsernName());
         }
     }
 
