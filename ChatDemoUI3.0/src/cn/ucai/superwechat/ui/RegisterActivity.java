@@ -70,22 +70,23 @@ public class RegisterActivity extends BaseActivity {
         setContentView(R.layout.em_activity_register);
         ButterKnife.bind(this);
         mContext = this;
+
     }
 
 
     public void register() {
-        String username = etUserName.getText().toString().trim();
-        String nickname = etNiChen.getText().toString().trim();
-        String pwd = etPassword.getText().toString().trim();
+        username = etUserName.getText().toString().trim();
+        nickname = etNiChen.getText().toString().trim();
+        pwd = etPassword.getText().toString().trim();
         String confirm_pwd = etCpassWord.getText().toString().trim();
         if (TextUtils.isEmpty(username)) {
             Toast.makeText(this, getResources().getString(R.string.User_name_cannot_be_empty), Toast.LENGTH_SHORT).show();
             etUserName.requestFocus();
             return;
-        } else if (!username.matches("[a-zA-Z]\\w{5,15}]")) {
-            Toast.makeText(this, getResources().getString(R.string.illegal_user_name), Toast.LENGTH_SHORT).show();
-            etUserName.requestFocus();
-            return;
+//        } else if (!username.matches("[a-zA-Z]\\w{5,15}]")) {
+//            Toast.makeText(this, getResources().getString(R.string.illegal_user_name), Toast.LENGTH_SHORT).show();
+//            etUserName.requestFocus();
+//            return;
         } else if (TextUtils.isEmpty(nickname)) {
             Toast.makeText(this, getResources().getString(R.string.toast_nick_not_isnull), Toast.LENGTH_SHORT).show();
             etNiChen.requestFocus();
@@ -161,7 +162,7 @@ public class RegisterActivity extends BaseActivity {
             public void run() {
                 try {
                     // call method in SDK
-                    EMClient.getInstance().createAccount(username,MD5.getMessageDigest(pwd));
+                    EMClient.getInstance().createAccount(username, MD5.getMessageDigest(pwd));
                     runOnUiThread(new Runnable() {
                         public void run() {
                             if (!RegisterActivity.this.isFinishing())

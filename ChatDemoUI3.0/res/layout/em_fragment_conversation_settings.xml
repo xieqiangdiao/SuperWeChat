@@ -5,11 +5,28 @@
     android:background="@color/common_bg"
     android:orientation="vertical" xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <com.hyphenate.easeui.widget.EaseTitleBar
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:titleBarTitle="@string/set"
-        />
+    <LinearLayout
+        android:layout_weight="7"
+        android:layout_width="fill_parent"
+        android:layout_height="40dp"
+        android:layout_centerVertical="true"
+       >
+        <ImageView
+            android:layout_weight="0"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/back" />
+        <TextView
+            android:layout_weight="6"
+            android:id="@+id/tv_Common_title"
+            android:layout_width="0dp"
+            android:gravity="center_horizontal"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="aaa"
+            android:textSize="30dp"/>
+    </LinearLayout>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -20,24 +37,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical" >
-            <LinearLayout
-                android:id="@+id/ll_change"
-                android:layout_width="match_parent"
-                android:layout_height="50dip"
-                android:background="@drawable/em_btn_bottom_selector"
-                android:padding="10dip"
-                >
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:paddingLeft="10dip"
-                    android:text="@string/change"
-                    android:textColor="@android:color/black"
-                    android:textSize="14sp"
-                    />
-            </LinearLayout>
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dip"

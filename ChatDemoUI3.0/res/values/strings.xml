@@ -142,4 +142,9 @@
     <string name="msg_501">msg_location_get_fail</string>
     <string name="msg_999">msg_unknow</string>
     <string name="msg_1">msg_illegal_request</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="User_name_cannot_be_modify">user name cannot be modify</string>
+    <string name="toast_nick_not_modify">toast ick not modify</string>
 </resources>
