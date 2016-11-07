@@ -29,7 +29,6 @@ import com.hyphenate.easeui.utils.EaseUserUtils;
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
@@ -53,8 +52,8 @@ public class UserProfileActivity extends BaseActivity implements OnClickListener
     private static final int REQUESTCODE_CUTTING = 2;
     @Bind(R.id.iv_back)
     ImageView ivback;
-    @Bind(R.id.txt_user_title)
-    TextView txttuseritle;
+//    @Bind(R.id.txt_user_title)
+//    TextView txttuseritle;
     @Bind(R.id.user_head_avatar)
     ImageView userHeadAvatar;
     @Bind(R.id.ic_right_arrow)
@@ -62,6 +61,7 @@ public class UserProfileActivity extends BaseActivity implements OnClickListener
     @Bind(R.id.shezhi_weixin)
     TextView tvUsername;
 
+    TextView txttuseritle;
     private ProgressDialog dialog;
     private RelativeLayout rlNickName;
 
@@ -78,6 +78,7 @@ public class UserProfileActivity extends BaseActivity implements OnClickListener
     }
 
     private void initView() {
+        txttuseritle= (TextView) findViewById(R.id.txt_user_title);
         ivback.setVisibility(View.VISIBLE);
         txttuseritle.setVisibility(View.VISIBLE);
         txttuseritle.setText(getString(R.string.title_user_profile));
@@ -249,7 +250,7 @@ public class UserProfileActivity extends BaseActivity implements OnClickListener
                     Result result = ResultUtils.getResultFromJson(s, User.class);
                     L.e(TAG, "result=" + result);
                     if (result != null && result.isRetMsg()) {
-                        User u = (User) result.isRetData();
+                        User u = (User) result.getRetData();
                         SuperWeChatHelper.getInstance().saveAppContact(u);
                         setPicToView(picData);
                     } else {

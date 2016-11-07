@@ -310,7 +310,7 @@ int id header 0x7f09002d
 int id image 0x7f090008
 int id indicator_view 0x7f09005e
 int id input_menu 0x7f090019
-int id iv_back 0x7f090014
+int id iv_back 0x7f090013
 int id iv_call_icon 0x7f090040
 int id iv_expression 0x7f090022
 int id iv_face_checked 0x7f090058
@@ -318,7 +318,6 @@ int id iv_face_normal 0x7f090057
 int id iv_icon 0x7f090048
 int id iv_switch_close 0x7f090063
 int id iv_switch_open 0x7f090062
-int id iv_title 0x7f090013
 int id iv_unread_voice 0x7f090043
 int id iv_userhead 0x7f090030
 int id iv_voice 0x7f090041
@@ -378,6 +377,7 @@ int id tv_length 0x7f090042
 int id tv_location 0x7f090037
 int id tv_name 0x7f090023
 int id tv_userid 0x7f090032
+int id txt_user_title 0x7f090014
 int id unread_msg_number 0x7f090027
 int id vPager 0x7f090016
 int id voice_recorder 0x7f09001b

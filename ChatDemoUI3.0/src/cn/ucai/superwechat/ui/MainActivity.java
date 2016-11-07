@@ -86,8 +86,7 @@ public class MainActivity extends BaseActivity implements DMTabHost.OnCheckedCha
 //	private int currentTabIndex;
 //	// user logged into another device
     public boolean isConflict = false;
-    @Bind(R.id.iv_back)
-    ImageView ivBack;
+
     @Bind(R.id.tv_Common_title)
     TextView tvCommonTitle;
     @Bind(R.id.layout_viewpage)
@@ -218,7 +217,7 @@ public class MainActivity extends BaseActivity implements DMTabHost.OnCheckedCha
 //        mTabs[2] = (Button) findViewById(R.id.btn_setting);
 //        // select first tab
 //        mTabs[0].setSelected(true);
-        ivBack.setVisibility(View.VISIBLE);
+        imgRight.setVisibility(View.VISIBLE);
         tvCommonTitle.setVisibility(View.VISIBLE);
         adapter = new MainTabAdpter(getSupportFragmentManager());
         adapter.clear();

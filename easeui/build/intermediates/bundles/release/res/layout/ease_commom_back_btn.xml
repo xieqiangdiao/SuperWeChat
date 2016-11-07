@@ -1,17 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-
     android:layout_width="45dip"
     android:layout_height="match_parent"
     android:background="@drawable/ease_common_tab_bg"
     android:clickable="true"
-    android:onClick="back">
-
-    <TextView
-        android:id="@+id/iv_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="mingcheng" />
+    android:onClick="back" >
 
     <ImageView
         android:id="@+id/iv_back"
@@ -21,5 +14,10 @@
         android:layout_marginLeft="11dp"
         android:scaleType="centerInside"
         android:src="@drawable/ease_mm_title_back" />
+    <TextView
+        android:id="@+id/txt_user_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="微信"/>
 
 </LinearLayout>

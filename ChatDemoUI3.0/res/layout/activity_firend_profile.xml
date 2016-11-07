@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#f2f2f2"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".ui.FriendProfileActivity">
+    <RelativeLayout
+        android:id="@+id/rv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+    <ImageView
+        android:id="@+id/img_back"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_gravity="center_vertical"
+        android:src="@drawable/back" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/view_user"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/img_pop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/contact_list_normal" />
+
+        <TextView
+
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_below="@id/img_pop"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/img_pop"
+            android:visibility="gone"
+            android:text="设置备注和标签"
+            />
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tv_User_name"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_below="@+id/view_user"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="5"
+        android:gravity="center_horizontal"
+        android:text="名称:"
+        android:textColor="@color/gray"
+        android:textSize="30dp" />
+
+    <TextView
+        android:id="@+id/tvUser_info_Nick"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_User_name"
+        android:layout_gravity="center_vertical"
+        android:gravity="center_horizontal"
+        android:text="昵称:"
+        android:textColor="@color/gray"
+        android:textSize="30dp" />
+
+<Button
+    android:id="@+id/butSendMsg"
+    android:layout_below="@id/tvUser_info_Nick"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="发消息"
+    /><Button
+    android:id="@+id/butSendVideo"
+    android:layout_below="@id/butSendMsg"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="视频聊天"
+    />
+
+</RelativeLayout>

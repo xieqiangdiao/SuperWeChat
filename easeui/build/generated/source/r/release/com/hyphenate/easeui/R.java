@@ -546,7 +546,7 @@ containing a value of this type.
         public static int image=0x7f090008;
         public static int indicator_view=0x7f09005e;
         public static int input_menu=0x7f090019;
-        public static int iv_back=0x7f090014;
+        public static int iv_back=0x7f090013;
         public static int iv_call_icon=0x7f090040;
         public static int iv_expression=0x7f090022;
         public static int iv_face_checked=0x7f090058;
@@ -554,7 +554,6 @@ containing a value of this type.
         public static int iv_icon=0x7f090048;
         public static int iv_switch_close=0x7f090063;
         public static int iv_switch_open=0x7f090062;
-        public static int iv_title=0x7f090013;
         public static int iv_unread_voice=0x7f090043;
         public static int iv_userhead=0x7f090030;
         public static int iv_voice=0x7f090041;
@@ -614,6 +613,7 @@ containing a value of this type.
         public static int tv_location=0x7f090037;
         public static int tv_name=0x7f090023;
         public static int tv_userid=0x7f090032;
+        public static int txt_user_title=0x7f090014;
         public static int unread_msg_number=0x7f090027;
         public static int vPager=0x7f090016;
         public static int voice_recorder=0x7f09001b;

@@ -144,7 +144,7 @@ public class TitlePopup extends PopupWindow {
 					convertView = LayoutInflater.from(mContext).inflate(
 							R.layout.layout_item_pop, parent, false);
 				}
-				TextView textView = ViewHolder.get(convertView, R.id.txt_title);
+				TextView textView = ViewHolder.get(convertView, R.id.txt_user_title);
 				textView.setTextColor(mContext.getResources().getColor(
 						android.R.color.white));
 				textView.setTextSize(16);

@@ -106,7 +106,7 @@ public class RegisterActivity extends BaseActivity {
         }
 
         if (!TextUtils.isEmpty(username) && !TextUtils.isEmpty(pwd)) {
-            final ProgressDialog pd = new ProgressDialog(this);
+           pd = new ProgressDialog(this);
             pd.setMessage(getResources().getString(R.string.Is_the_registered));
             pd.show();
             registerAppServer();
