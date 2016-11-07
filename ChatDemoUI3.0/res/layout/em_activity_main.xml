@@ -5,33 +5,41 @@
     android:id="@+id/mainLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/common_bg">
+    >
 
     <LinearLayout
         android:id="@+id/layout_title"
         android:layout_weight="7"
         android:layout_width="fill_parent"
         android:layout_height="40dp"
-        android:background="@color/orange"
-       >
-        <ImageView
-            android:id="@+id/iv_back"
-            android:layout_weight="1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:background="@color/red"
-            android:src="@drawable/ease_btn_blue_normal_shape" />
+        android:orientation="horizontal"
+        >
         <TextView
-            android:layout_weight="6"
+
             android:id="@+id/tv_Common_title"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:gravity="center_horizontal"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:text="微信"
+            android:textColor="@color/gray"
             android:textSize="30dp"/>
+        <TextView
+            android:id="@+id/tv"
+            android:layout_weight="5"
+            android:layout_width="match_parent"
+            android:layout_height="47dp"
+            />
+
+        <ImageView
+            android:id="@+id/img_right"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/ease_blue_add" />
+
     </LinearLayout>
+
     <cn.ucai.superwechat.widget.MFViewPager
         android:id="@+id/layout_viewpage"
         android:layout_below="@id/layout_title"
