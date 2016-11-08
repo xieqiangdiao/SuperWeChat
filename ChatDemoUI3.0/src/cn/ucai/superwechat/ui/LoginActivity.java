@@ -48,6 +48,7 @@ import cn.ucai.superwechat.data.OkHttpUtils;
 import cn.ucai.superwechat.db.SuperWeChatManager;
 import cn.ucai.superwechat.db.UserDao;
 import cn.ucai.superwechat.utils.L;
+import cn.ucai.superwechat.utils.MD5;
 import cn.ucai.superwechat.utils.MFGT;
 import cn.ucai.superwechat.utils.ResultUtils;
 
@@ -89,7 +90,6 @@ public class LoginActivity extends BaseActivity {
         if (SuperWeChatHelper.getInstance().isLoggedIn()) {
             autoLogin = true;
             startActivity(new Intent(LoginActivity.this, MainActivity.class));
-
             return;
         }
         setContentView(R.layout.em_activity_login);
@@ -127,7 +127,6 @@ public class LoginActivity extends BaseActivity {
             etUserName.setText(SuperWeChatHelper.getInstance().getCurrentUsernName());
         }
         imgBack.setVisibility(View.VISIBLE);
-
     }
 
     private void setListener() {
@@ -170,12 +169,10 @@ public class LoginActivity extends BaseActivity {
             Toast.makeText(this, R.string.Password_cannot_be_empty, Toast.LENGTH_SHORT).show();
             return;
         }
-
         progressShow = true;
         pd = new ProgressDialog(LoginActivity.this);
         pd.setCanceledOnTouchOutside(false);
         pd.setOnCancelListener(new OnCancelListener() {
-
             @Override
             public void onCancel(DialogInterface dialog) {
                 Log.d(TAG, "EMClient.getInstance().onCancel");
@@ -184,7 +181,7 @@ public class LoginActivity extends BaseActivity {
         });
         pd.setMessage(getString(R.string.Is_landing));
         pd.show();
-        loginEMServer();
+        loginAppServer();
 
     }
 
@@ -199,12 +196,12 @@ public class LoginActivity extends BaseActivity {
         final long start = System.currentTimeMillis();
         // call login method
         Log.d(TAG, "EMClient.getInstance().login");
-        EMClient.getInstance().login(currentUsername, currentPassword, new EMCallBack() {
+        EMClient.getInstance().login(currentUsername, MD5.getMessageDigest(currentPassword), new EMCallBack() {
 
             @Override
             public void onSuccess() {
-                Log.d(TAG, "login: onSuccess");
-                loginAppServer();
+                Log.e(TAG, "login: onSuccess");
+                loginSuccess();
 
             }
 
@@ -243,7 +240,7 @@ public class LoginActivity extends BaseActivity {
                             UserDao dao = new UserDao(mContext);
                             dao.saveUser(user);
                             SuperWeChatHelper.getInstance().setCurrentUser(user);
-                            loginSuccess();
+                            loginEMServer();
                         }
                     } else {
                         pd.dismiss();
@@ -260,7 +257,6 @@ public class LoginActivity extends BaseActivity {
                 pd.dismiss();
             }
         });
-        loginSuccess();
     }
 
     private void loginSuccess() {
@@ -284,7 +280,6 @@ public class LoginActivity extends BaseActivity {
         Intent intent = new Intent(LoginActivity.this,
                 MainActivity.class);
         startActivity(intent);
-
         finish();
     }
 
@@ -322,7 +317,6 @@ public class LoginActivity extends BaseActivity {
                 break;
         }
     }
-
     @Override
     protected void onDestroy() {
         super.onDestroy();

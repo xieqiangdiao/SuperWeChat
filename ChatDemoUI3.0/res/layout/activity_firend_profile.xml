@@ -10,23 +10,43 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".ui.FriendProfileActivity">
     <RelativeLayout
-        android:id="@+id/rv_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/height_top_bar"
+        android:background="@color/top_bar_normal_bg"
+        android:gravity="center_vertical">
+
+        <include layout="@layout/ease_commom_back_btn" />
+
         <TextView
-            android:id="@+id/tv_title"
+            android:id="@+id/img_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            />
-    <ImageView
-        android:id="@+id/img_back"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_gravity="center_vertical"
-        android:src="@drawable/back" />
+            android:layout_centerInParent="true"
+            android:textColor="#fff"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:textSize="25dp"
+            android:text="详细资料"/>
+
+       <ImageView
+           android:id="@+id/img_right"
+           android:layout_alignParentRight="true"
+           android:layout_centerVertical="true"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:src="@drawable/icon_more"/>
     </RelativeLayout>
+
+
     <RelativeLayout
+        android:layout_below="@id/title"
         android:id="@+id/view_user"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content">
@@ -44,9 +64,8 @@
             android:layout_below="@id/img_pop"
             android:layout_marginLeft="10dp"
             android:layout_toRightOf="@id/img_pop"
-            android:visibility="gone"
             android:text="设置备注和标签"
-            />
+            android:visibility="gone" />
 
     </RelativeLayout>
 
@@ -72,19 +91,26 @@
         android:text="昵称:"
         android:textColor="@color/gray"
         android:textSize="30dp" />
+    <Button
+        android:id="@+id/add_contact"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvUser_info_Nick"
 
-<Button
-    android:id="@+id/butSendMsg"
-    android:layout_below="@id/tvUser_info_Nick"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="发消息"
-    /><Button
-    android:id="@+id/butSendVideo"
-    android:layout_below="@id/butSendMsg"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="视频聊天"
-    />
+        android:text="添加联系人" />
+
+    <Button
+        android:id="@+id/butSendMsg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/add_contact"
+        android:text="发消息" />
+
+    <Button
+        android:id="@+id/butSendVideo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/butSendMsg"
+        android:text="视频聊天" />
 
 </RelativeLayout>

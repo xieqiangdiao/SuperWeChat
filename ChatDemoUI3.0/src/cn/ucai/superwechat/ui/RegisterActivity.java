@@ -16,6 +16,7 @@ package cn.ucai.superwechat.ui;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -36,6 +37,7 @@ import cn.ucai.superwechat.SuperWeChatHelper;
 import cn.ucai.superwechat.bean.Result;
 import cn.ucai.superwechat.data.NetDao;
 import cn.ucai.superwechat.data.OkHttpUtils;
+import cn.ucai.superwechat.db.UserDao;
 import cn.ucai.superwechat.utils.CommonUtils;
 import cn.ucai.superwechat.utils.MD5;
 import cn.ucai.superwechat.utils.MFGT;
@@ -117,15 +119,19 @@ public class RegisterActivity extends BaseActivity {
         NetDao.register(mContext, username, nickname, pwd, new OkHttpUtils.OnCompleteListener<Result>() {
             @Override
             public void onSuccess(Result result) {
+                Log.e("main","result:"+result);
                 if (result == null) {
                     pd.dismiss();
                 } else {
                     if (result.isRetMsg()) {
                         registerEMServer();
+
                     } else {
                         if (result.getRetCode() == I.MSG_REGISTER_USERNAME_EXISTS) {
+                            SuperWeChatHelper.getInstance().setCurrentUserName(username);
                             CommonUtils.showMsgShortToast(result.getRetCode());
                             pd.dismiss();
+                            registerEMServer();
                         } else {
                             unreqisterAppServer();
                         }
@@ -140,7 +146,7 @@ public class RegisterActivity extends BaseActivity {
             }
         });
         registerEMServer();
-        unreqisterAppServer();
+
     }
 
     private void unreqisterAppServer() {
@@ -175,7 +181,6 @@ public class RegisterActivity extends BaseActivity {
                     });
                 } catch (final HyphenateException e) {
                     //
-                    unreqisterAppServer();
                     runOnUiThread(new Runnable() {
                         public void run() {
                             if (!RegisterActivity.this.isFinishing())

@@ -58,6 +58,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.ucai.superwechat.Constant;
 
+import cn.ucai.superwechat.R;
 import cn.ucai.superwechat.SuperWeChatHelper;
 import cn.ucai.superwechat.adapter.MainTabAdpter;
 import cn.ucai.superwechat.db.InviteMessgeDao;
@@ -119,6 +120,7 @@ public class MainActivity extends BaseActivity implements DMTabHost.OnCheckedCha
         // runtime permission for android 6.0, just require all permissions here for simple
         requestPermissions();
 
+        contactListFragment = new ContactListFragment();
         initView();
 
         umeng();
@@ -128,7 +130,6 @@ public class MainActivity extends BaseActivity implements DMTabHost.OnCheckedCha
         inviteMessgeDao = new InviteMessgeDao(this);
         UserDao userDao = new UserDao(this);
 //        conversationListFragment = new ConversationListFragment();
-        contactListFragment = new ContactListFragment();
 //        SettingsFragment settingFragment = new SettingsFragment();
 //        fragments = new Fragment[]{conversationListFragment, contactListFragment, settingFragment};
 //

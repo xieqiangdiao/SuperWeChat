@@ -5,7 +5,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.hyphenate.easeui.domain.User;
@@ -22,23 +21,26 @@ import cn.ucai.superwechat.utils.MFGT;
 public class FriendProfileActivity extends AppCompatActivity {
     User user;
     @Bind(R.id.img_back)
-    ImageView imgBack;
+    TextView imgBack;
+    @Bind(R.id.tv_title)
+    TextView tvTitle;
+    @Bind(R.id.img_right)
+    ImageView imgRight;
     @Bind(R.id.img_pop)
     ImageView imgPop;
-    @Bind(R.id.view_user)
-    RelativeLayout viewUser;
     @Bind(R.id.tv_User_name)
     TextView tvUserName;
     @Bind(R.id.tvUser_info_Nick)
     TextView tvUserInfoNick;
-    @Bind(R.id.rv_title)
-    RelativeLayout rvTitle;
-    @Bind(R.id.tv_title)
-    RelativeLayout tvTitle;
+    @Bind(R.id.iv_back)
+    ImageView ivBack;
+    @Bind(R.id.add_contact)
+    Button addContact;
     @Bind(R.id.butSendMsg)
     Button butSendMsg;
     @Bind(R.id.butSendVideo)
     Button butSendVideo;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,23 +64,37 @@ public class FriendProfileActivity extends AppCompatActivity {
 
     private void setUserInfo() {
         EaseUserUtils.setAppUserAvatar(this, user.getMUserName(), imgPop);
-        EaseUserUtils.setAppUserNick(this, user.getMUserNick(), tvUserInfoNick);
-        EaseUserUtils.setAppUserNameWithNo(this, user.getMUserName(), tvUserName);
+        EaseUserUtils.setAppUserNick( user.getMUserNick(), tvUserInfoNick);
+        EaseUserUtils.setAppUserNameWithNo(user.getMUserName(), tvUserName);
 
     }
 
 
-    public boolean isFriend() {
+    public void isFriend() {
         if (SuperWeChatHelper.getInstance().getAppContactList().containsKey(user.getMUserName())) {
-
+            butSendMsg.setVisibility(View.VISIBLE);
+            butSendVideo.setVisibility(View.VISIBLE);
+        } else {
+            addContact.setVisibility(View.VISIBLE);
         }
 
     }
 
-    @OnClick(R.id.img_back)
-    public void onClick() {
-        MFGT.finish(this);
+    @OnClick({R.id.img_back, R.id.add_contact, R.id.butSendMsg, R.id.butSendVideo})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.img_back:
+                MFGT.finish(this);
+                break;
+            case R.id.add_contact:
+               MFGT.gotoAddFrendrofile(this,user.getMUserName());
+                break;
+            case R.id.butSendMsg:
+                MFGT.gotoChat(this,user.getMUserName());
+                break;
+            case R.id.butSendVideo:
+                break;
+        }
+
     }
-
-
 }

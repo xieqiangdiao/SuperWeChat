@@ -117,7 +117,6 @@ public class UserDao {
 	}
 
 	public boolean updateUser(User user) {
-
 		return SuperWeChatManager.getInstance().updateUser(user);
 	}
 	public UserDao(Context context) {

@@ -24,7 +24,7 @@ public class SplashActivity extends BaseActivity {
     protected void onCreate(Bundle arg0) {
         setContentView(R.layout.em_activity_splash);
         super.onCreate(arg0);
-mContext=this;
+        mContext=this;
     }
 
     @Override
@@ -39,8 +39,8 @@ mContext=this;
                     EMClient.getInstance().groupManager().loadAllGroups();
                     EMClient.getInstance().chatManager().loadAllConversations();
                     UserDao dao=new UserDao(mContext);
+                    L.e(TAG,"user="+EMClient.getInstance().getCurrentUser());
                     User user = dao.getUser(EMClient.getInstance().getCurrentUser());
-                    L.e(TAG,"user="+user);
                     SuperWeChatHelper.getInstance().setCurrentUser(user);
 
                     long costTime = System.currentTimeMillis() - start;
@@ -72,6 +72,7 @@ mContext=this;
      * get sdk version
      */
     private String getVersion() {
+
         return EMClient.getInstance().getChatConfig().getVersion();
     }
 }

@@ -22,6 +22,7 @@ import cn.ucai.superwechat.SuperWeChatHelper.DataSyncListener;
 import cn.ucai.superwechat.R;
 import cn.ucai.superwechat.db.InviteMessgeDao;
 import cn.ucai.superwechat.db.UserDao;
+import cn.ucai.superwechat.utils.MFGT;
 import cn.ucai.superwechat.widget.ContactItemView;
 import com.hyphenate.easeui.domain.EaseUser;
 import com.hyphenate.easeui.ui.EaseContactListFragment;
@@ -180,8 +181,8 @@ public class ContactListFragment extends EaseContactListFragment {
         public void onClick(View v) {
             switch (v.getId()) {
             case R.id.application_item:
-                // 进入申请与通知页面
-                startActivity(new Intent(getActivity(), NewFriendsMsgActivity.class));
+                // 进入新的朋友页面
+                MFGT.gotoNewFriendsMsg(getActivity());
                 break;
             case R.id.group_item:
                 // 进入群聊列表页面
@@ -224,9 +225,6 @@ public class ContactListFragment extends EaseContactListFragment {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-			return true;
-		}else if(item.getItemId() == R.id.add_to_blacklist){
-			moveToBlacklist(toBeProcessUsername);
 			return true;
 		}
 		return super.onContextItemSelected(item);

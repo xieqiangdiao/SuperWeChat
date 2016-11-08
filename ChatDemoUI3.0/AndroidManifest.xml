@@ -109,6 +109,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
             android:windowSoftInputMode="stateVisible" />
+
         <!-- 群组详情 -->
         <activity
             android:name=".ui.GroupDetailsActivity"
@@ -492,7 +493,7 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
+        </activity>
     </application>
 
 </manifest>
