@@ -52,7 +52,7 @@ public class AddContactActivity extends BaseActivity {
     @Bind(R.id.edit_note)
     EditText editNote;
 
-    private String toAddUsername;
+    private String Username;
     private ProgressDialog progressDialog;
 
     @Override
@@ -80,7 +80,7 @@ public class AddContactActivity extends BaseActivity {
      */
     public void searchContact(View v) {
         final String name = editNote.getText().toString().trim();
-        toAddUsername = name;
+        Username = name;
         if (TextUtils.isEmpty(name)) {
             new EaseAlertDialog(this, R.string.Please_enter_a_username).show();
             return;
@@ -124,7 +124,7 @@ public class AddContactActivity extends BaseActivity {
                 try {
                     //demo use a hardcode reason here, you need let user to input if you like
                     String s = getResources().getString(R.string.Add_a_friend);
-                    EMClient.getInstance().contactManager().addContact(toAddUsername, s);
+                    EMClient.getInstance().contactManager().addContact(Username, s);
                     runOnUiThread(new Runnable() {
                         public void run() {
                             progressDialog.dismiss();
@@ -150,7 +150,7 @@ public class AddContactActivity extends BaseActivity {
     }
 
     private void searchAppUser() {
-        NetDao.searchUser(this, toAddUsername, new OkHttpUtils.OnCompleteListener<String>() {
+        NetDao.searchUser(this, Username, new OkHttpUtils.OnCompleteListener<String>() {
             @Override
 
             public void onSuccess(String s) {
@@ -161,7 +161,7 @@ public class AddContactActivity extends BaseActivity {
                     if (result != null && result.isRetMsg()) {
                         User user = (User) result.getRetData();
                         if (user != null) {
-                            MFGT.gotoFrendrofile(AddContactActivity.this,user);
+                            MFGT.gotoFrendProfile(AddContactActivity.this,user);
                         }
                     } else {
                         CommonUtils.showShortToast(R.string.msg_104);
@@ -188,7 +188,6 @@ public class AddContactActivity extends BaseActivity {
                 MFGT.finish(this);
                 break;
             case R.id.search:
-                searchContact();
                 break;
         }
     }

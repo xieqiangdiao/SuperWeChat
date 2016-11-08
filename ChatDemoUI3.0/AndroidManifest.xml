@@ -99,6 +99,16 @@
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
             android:windowSoftInputMode="stateVisible" />
+        <activity
+            android:name=".ui.AddFriendActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/horizontal_slide"
+            android:windowSoftInputMode="stateVisible" />
+        <activity
+            android:name=".ui.FriendProfileActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/horizontal_slide"
+            android:windowSoftInputMode="stateVisible" />
         <!-- 群组详情 -->
         <activity
             android:name=".ui.GroupDetailsActivity"
@@ -482,8 +492,7 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity android:name=".ui.FriendProfileActivity"></activity>
+
     </application>
 
 </manifest>
