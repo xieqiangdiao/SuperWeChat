@@ -28,9 +28,9 @@
                     android:layout_toRightOf="@id/profile_avatar"
                     android:id="@+id/profile_nick"
                     android:text="鳄鱼"
-                    android:textSize="20sp"
+                    android:textSize="13sp"
                     android:layout_width="wrap_content"
-                    android:layout_height="25dp"
+                    android:layout_height="22.5dp"
                     />
                 <TextView
                     android:layout_marginTop="5dp"
@@ -38,9 +38,9 @@
                     android:layout_toRightOf="@id/profile_avatar"
                     android:id="@+id/profile_weixin"
                     android:text="鳄鱼"
-                    android:textSize="20sp"
+                    android:textSize="13sp"
                     android:layout_width="wrap_content"
-                    android:layout_height="25dp"
+                    android:layout_height="22.5dp"
                     />
             </RelativeLayout>
 
