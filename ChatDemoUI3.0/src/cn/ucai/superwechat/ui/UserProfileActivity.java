@@ -56,7 +56,7 @@ public class UserProfileActivity extends BaseActivity implements OnClickListener
 //    TextView txttuseritle;
     @Bind(R.id.user_head_avatar)
     ImageView userHeadAvatar;
-    @Bind(R.id.ic_right_arrow)
+    @Bind(R.id.user_nickname)
     TextView tvNickName;
     @Bind(R.id.shezhi_weixin)
     TextView tvUsername;

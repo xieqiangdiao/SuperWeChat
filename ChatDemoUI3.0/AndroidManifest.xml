@@ -104,10 +104,11 @@
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
             android:windowSoftInputMode="stateVisible" />
+
         <activity
             android:name=".ui.FriendProfileActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/horizontal_slide"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
             android:windowSoftInputMode="stateVisible" />
 
         <!-- 群组详情 -->

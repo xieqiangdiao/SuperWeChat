@@ -257,7 +257,7 @@ public class ContactListFragment extends EaseContactListFragment {
                 if (s!=null) {
                     Result result= ResultUtils.getResultFromJson(s,User.class);
                     if(result!=null&&result.isRetMsg()){
-                        SuperWeChatHelper.getInstance().getAppContactList().remove(tobeDeleteUser.getUsername());
+                        SuperWeChatHelper.getInstance().delAppContact(tobeDeleteUser.getUsername());
                     }
                 }
             }

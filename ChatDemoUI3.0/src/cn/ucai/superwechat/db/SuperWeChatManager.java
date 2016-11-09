@@ -227,7 +227,7 @@ public class SuperWeChatManager {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         List<InviteMessage> msgs = new ArrayList<InviteMessage>();
         if (db.isOpen()) {
-            Cursor cursor = db.rawQuery("select * from " + InviteMessgeDao.TABLE_NAME + " order by"+InviteMessgeDao.COLUMN_NAME_TIME+"desc", null);
+            Cursor cursor = db.rawQuery("select * from " + InviteMessgeDao.TABLE_NAME + " order by " + InviteMessgeDao.COLUMN_NAME_TIME + " desc ", null);
             while (cursor.moveToNext()) {
                 InviteMessage msg = new InviteMessage();
                 int id = cursor.getInt(cursor.getColumnIndex(InviteMessgeDao.COLUMN_NAME_ID));
@@ -434,7 +434,7 @@ public class SuperWeChatManager {
     synchronized public void saveAppContact(User user) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(UserDao.TABLE_USER_NAME,user.getMUserName());
+        values.put(UserDao.TABLE_USER_NAME, user.getMUserName());
         if (user.getMUserNick() != null)
             values.put(UserDao.TABLE_COLUMN_NICK, user.getMUserNick());
         if (user.getMAvatarId() != null)
@@ -468,7 +468,7 @@ public class SuperWeChatManager {
                 user.setMAvatarSuffix(cursor.getString(cursor.getColumnIndex(UserDao.TABLE_COLUMN_SUFFIX)));
                 user.setMAvatarLastUpdateTime(cursor.getString(cursor.getColumnIndex(UserDao.TABLE_COLUMN_LASTUPDATE_TIME)));
 
-                    EaseCommonUtils.setAppUserInitialLetter(user);
+                EaseCommonUtils.setAppUserInitialLetter(user);
 
                 users.put(username, user);
             }
@@ -498,6 +498,13 @@ public class SuperWeChatManager {
                     values.put(UserDao.TABLE_COLUMN_LASTUPDATE_TIME, user.getMAvatarLastUpdateTime());
                 db.replace(UserDao.TABLE_USER_NAME, null, values);
             }
+        }
+    }
+
+    synchronized public void deleteAppContact(String username) {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        if (db.isOpen()) {
+            db.delete(UserDao.TABLE_USER_NAME,UserDao.TABLE_USER_NAME + " = ?",new String[]{username});
         }
     }
 }

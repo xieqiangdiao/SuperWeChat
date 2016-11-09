@@ -79,8 +79,6 @@ public class RegisterActivity extends BaseActivity {
         tvLogin.setVisibility(View.VISIBLE);
         tvLogin.setText(R.string.register);
     }
-
-
     public void register() {
         username = etUserName.getText().toString().trim();
         nickname = etNiChen.getText().toString().trim();
@@ -90,10 +88,10 @@ public class RegisterActivity extends BaseActivity {
             Toast.makeText(this, getResources().getString(R.string.User_name_cannot_be_empty), Toast.LENGTH_SHORT).show();
             etUserName.requestFocus();
             return;
-        } else if (!username.matches("[a-zA-Z]\\w{5,15}]")) {
-            Toast.makeText(this, getResources().getString(R.string.illegal_user_name), Toast.LENGTH_SHORT).show();
-            etUserName.requestFocus();
-            return;
+//        } else if (!username.matches("[a-zA-Z]\\w{5,15}]")) {
+//            Toast.makeText(this, getResources().getString(R.string.illegal_user_name), Toast.LENGTH_SHORT).show();
+//            etUserName.requestFocus();
+//            return;
         } else if (TextUtils.isEmpty(nickname)) {
             Toast.makeText(this, getResources().getString(R.string.toast_nick_not_isnull), Toast.LENGTH_SHORT).show();
             etNiChen.requestFocus();
@@ -130,7 +128,6 @@ public class RegisterActivity extends BaseActivity {
                 } else {
                     if (result.isRetMsg()) {
                           registerEMServer();
-
                     } else {
                         if (result.getRetCode() == I.MSG_REGISTER_USERNAME_EXISTS) {
                             SuperWeChatHelper.getInstance().setCurrentUserName(username);
@@ -141,7 +138,6 @@ public class RegisterActivity extends BaseActivity {
                         }
                     }
                 }
-
             }
 
             @Override
@@ -207,8 +203,6 @@ public class RegisterActivity extends BaseActivity {
                 }
             }
         }).start();
-
-
     }
 
     @Override

@@ -32,8 +32,8 @@ public class FriendProfileActivity extends AppCompatActivity {
     TextView tvUserName;
     @Bind(R.id.tvUser_info_Nick)
     TextView tvUserInfoNick;
-    @Bind(R.id.iv_back)
-    ImageView ivBack;
+    /*@Bind(R.id.iv_back)
+    ImageView ivBack;*/
     @Bind(R.id.add_contact)
     Button addContact;
     @Bind(R.id.butSendMsg)

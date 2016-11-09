@@ -22,9 +22,9 @@ public class CommonUtils {
     }
     public static void showMsgShortToast(int msgId){
         if(msgId>0){
-            showLongToast(SuperWeChatApplication.getInstance().getResources().getIdentifier(I.MSG_PREFIX_MSG+msgId+msgId,"string",SuperWeChatApplication.getInstance().getPackageName()));
+            showShortToast(SuperWeChatApplication.getInstance().getResources().getIdentifier(I.MSG_PREFIX_MSG+msgId,"string",SuperWeChatApplication.getInstance().getPackageName()));
         }else{
-            showLongToast(R.string.msg_1);
+            showShortToast(R.string.msg_1);
         }
 
     }

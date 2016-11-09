@@ -182,14 +182,12 @@ public class AddContactActivity extends BaseActivity {
         });
     }
 
-    @OnClick({R.id.iv_back, R.id.search})
+    @OnClick({R.id.iv_back})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.iv_back:
                 MFGT.finish(this);
                 break;
-            case R.id.search:
-                break;
-        }
-    }
+
+        }}
 }
