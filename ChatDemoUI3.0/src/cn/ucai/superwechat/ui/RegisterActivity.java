@@ -37,7 +37,6 @@ import cn.ucai.superwechat.SuperWeChatHelper;
 import cn.ucai.superwechat.bean.Result;
 import cn.ucai.superwechat.data.NetDao;
 import cn.ucai.superwechat.data.OkHttpUtils;
-import cn.ucai.superwechat.db.UserDao;
 import cn.ucai.superwechat.utils.CommonUtils;
 import cn.ucai.superwechat.utils.MD5;
 import cn.ucai.superwechat.utils.MFGT;
@@ -62,8 +61,8 @@ public class RegisterActivity extends BaseActivity {
     EditText etCpassWord;
     ProgressDialog pd = null;
     String username;
-    String nickname;
     String pwd;
+    String nickname;
     RegisterActivity mContext;
 
     @Override
@@ -72,7 +71,13 @@ public class RegisterActivity extends BaseActivity {
         setContentView(R.layout.em_activity_register);
         ButterKnife.bind(this);
         mContext = this;
+        initView();
+    }
 
+    private void initView() {
+        ivmagback.setVisibility(View.VISIBLE);
+        tvLogin.setVisibility(View.VISIBLE);
+        tvLogin.setText(R.string.register);
     }
 
 
@@ -85,10 +90,10 @@ public class RegisterActivity extends BaseActivity {
             Toast.makeText(this, getResources().getString(R.string.User_name_cannot_be_empty), Toast.LENGTH_SHORT).show();
             etUserName.requestFocus();
             return;
-//        } else if (!username.matches("[a-zA-Z]\\w{5,15}]")) {
-//            Toast.makeText(this, getResources().getString(R.string.illegal_user_name), Toast.LENGTH_SHORT).show();
-//            etUserName.requestFocus();
-//            return;
+        } else if (!username.matches("[a-zA-Z]\\w{5,15}]")) {
+            Toast.makeText(this, getResources().getString(R.string.illegal_user_name), Toast.LENGTH_SHORT).show();
+            etUserName.requestFocus();
+            return;
         } else if (TextUtils.isEmpty(nickname)) {
             Toast.makeText(this, getResources().getString(R.string.toast_nick_not_isnull), Toast.LENGTH_SHORT).show();
             etNiChen.requestFocus();
@@ -108,7 +113,7 @@ public class RegisterActivity extends BaseActivity {
         }
 
         if (!TextUtils.isEmpty(username) && !TextUtils.isEmpty(pwd)) {
-           pd = new ProgressDialog(this);
+            pd = new ProgressDialog(this);
             pd.setMessage(getResources().getString(R.string.Is_the_registered));
             pd.show();
             registerAppServer();
@@ -119,19 +124,18 @@ public class RegisterActivity extends BaseActivity {
         NetDao.register(mContext, username, nickname, pwd, new OkHttpUtils.OnCompleteListener<Result>() {
             @Override
             public void onSuccess(Result result) {
-                Log.e("main","result:"+result);
+                Log.e("main", "result:" + result);
                 if (result == null) {
                     pd.dismiss();
                 } else {
                     if (result.isRetMsg()) {
-                        registerEMServer();
+                          registerEMServer();
 
                     } else {
                         if (result.getRetCode() == I.MSG_REGISTER_USERNAME_EXISTS) {
                             SuperWeChatHelper.getInstance().setCurrentUserName(username);
                             CommonUtils.showMsgShortToast(result.getRetCode());
                             pd.dismiss();
-                            registerEMServer();
                         } else {
                             unreqisterAppServer();
                         }
@@ -145,7 +149,7 @@ public class RegisterActivity extends BaseActivity {
                 pd.dismiss();
             }
         });
-        registerEMServer();
+
 
     }
 
@@ -181,6 +185,7 @@ public class RegisterActivity extends BaseActivity {
                     });
                 } catch (final HyphenateException e) {
                     //
+                    unreqisterAppServer();
                     runOnUiThread(new Runnable() {
                         public void run() {
                             if (!RegisterActivity.this.isFinishing())
@@ -205,12 +210,6 @@ public class RegisterActivity extends BaseActivity {
 
 
     }
-
-
-
-    /*public void back(View view) {
-        finish();
-    }*/
 
     @Override
     public void onBackPressed() {
