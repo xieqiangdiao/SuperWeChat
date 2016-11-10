@@ -1,12 +1,15 @@
 package cn.ucai.superwechat.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.hyphenate.chat.EMClient;
 import com.hyphenate.easeui.domain.User;
 import com.hyphenate.easeui.utils.EaseUserUtils;
 
@@ -21,7 +24,7 @@ import cn.ucai.superwechat.utils.MFGT;
 public class FriendProfileActivity extends AppCompatActivity {
     User user;
     @Bind(R.id.img_back)
-    TextView imgBack;
+    ImageView imgBack;
     @Bind(R.id.tv_title)
     TextView tvTitle;
     @Bind(R.id.img_right)
@@ -32,8 +35,6 @@ public class FriendProfileActivity extends AppCompatActivity {
     TextView tvUserName;
     @Bind(R.id.tvUser_info_Nick)
     TextView tvUserInfoNick;
-    /*@Bind(R.id.iv_back)
-    ImageView ivBack;*/
     @Bind(R.id.add_contact)
     Button addContact;
     @Bind(R.id.butSendMsg)
@@ -93,6 +94,13 @@ public class FriendProfileActivity extends AppCompatActivity {
                 MFGT.gotoChat(this,user.getMUserName());
                 break;
             case R.id.butSendVideo:
+                if (!EMClient.getInstance().isConnected())
+                    Toast.makeText(this, R.string.not_connect_to_server, Toast.LENGTH_SHORT).show();
+                else {
+                    startActivity(new Intent(this, VideoCallActivity.class).putExtra("username", user.getMUserName())
+                            .putExtra("isComingCall", false));
+                    // videoCallBtn.setEnabled(false);
+                }
                 break;
         }
 
