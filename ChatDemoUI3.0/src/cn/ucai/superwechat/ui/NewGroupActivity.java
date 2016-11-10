@@ -236,7 +236,7 @@ public class NewGroupActivity extends BaseActivity {
 
     private void afterCreateAppGroup(String s) {
         if (s != null) {
-            Result result = ResultUtils.getResultFromJson(s, I.Group.class);
+            Result result = ResultUtils.getResultFromJson(s, Group.class);
             L.e(TAG, "result=" + result);
             if (result != null && result.isRetMsg()) {
                 Group group = (Group) result.getRetData();

@@ -52,7 +52,7 @@ public class UserProfileActivity extends BaseActivity implements OnClickListener
     private static final int REQUESTCODE_CUTTING = 2;
     @Bind(R.id.iv_back)
     ImageView ivback;
-//    @Bind(R.id.txt_user_title)
+    //    @Bind(R.id.txt_user_title)
 //    TextView txttuseritle;
     @Bind(R.id.user_head_avatar)
     ImageView userHeadAvatar;
@@ -64,7 +64,7 @@ public class UserProfileActivity extends BaseActivity implements OnClickListener
     TextView txttuseritle;
     private ProgressDialog dialog;
     private RelativeLayout rlNickName;
-
+    UserProfileActivity context;
     User user = null;
 
     @Override
@@ -72,13 +72,14 @@ public class UserProfileActivity extends BaseActivity implements OnClickListener
         super.onCreate(arg0);
         setContentView(R.layout.em_activity_user_profile);
         ButterKnife.bind(this);
+        context=this;
         initView();
         initListener();
         user = EaseUserUtils.getCurrentAppUserInfo();
     }
 
     private void initView() {
-        txttuseritle= (TextView) findViewById(R.id.txt_user_title);
+        txttuseritle = (TextView) findViewById(R.id.txt_user_title);
         ivback.setVisibility(View.VISIBLE);
         txttuseritle.setVisibility(View.VISIBLE);
         txttuseritle.setText(getString(R.string.title_user_profile));
@@ -230,7 +231,7 @@ public class UserProfileActivity extends BaseActivity implements OnClickListener
             case REQUESTCODE_CUTTING:
                 if (data != null) {
                     updateAppUserAvatar(data);
-           //         setPicToView(data);
+                    //         setPicToView(data);
                 }
                 break;
             default:
@@ -253,6 +254,7 @@ public class UserProfileActivity extends BaseActivity implements OnClickListener
                         User u = (User) result.getRetData();
                         SuperWeChatHelper.getInstance().saveAppContact(u);
                         setPicToView(picData);
+                        EaseUserUtils.setCurrentAppUserAvatar(context, userHeadAvatar);
                     } else {
                         dialog.dismiss();
                         CommonUtils.showMsgShortToast(result != null ? result.getRetCode() : -1);
@@ -282,7 +284,7 @@ public class UserProfileActivity extends BaseActivity implements OnClickListener
             L.e("file path=" + file.getAbsolutePath());
             try {
                 BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(file));
-                bitmap.compress(Bitmap.CompressFormat.PNG, 100, bos);
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bos);
                 bos.flush();
                 bos.close();
             } catch (IOException e) {
@@ -317,7 +319,7 @@ public class UserProfileActivity extends BaseActivity implements OnClickListener
             Bitmap photo = extras.getParcelable("data");
             Drawable drawable = new BitmapDrawable(getResources(), photo);
             userHeadAvatar.setImageDrawable(drawable);
-            uploadUserAvatar(Bitmap2Bytes(photo));
+            // uploadUserAvatar(Bitmap2Bytes(photo));
             dialog.dismiss();
         }
 

@@ -36,8 +36,8 @@ public class ProfileFragment extends Fragment {
     TextView profileWeixin;
     @Bind(R.id.profile_setting)
     RelativeLayout profileSetting;
-    @Bind(R.id.profile_scrollview)
-    ScrollView profileScrollview;
+//    @Bind(R.id.profile_scrollview)
+//    ScrollView profileScrollview;
 
     public ProfileFragment() {
         // Required empty public constructor
