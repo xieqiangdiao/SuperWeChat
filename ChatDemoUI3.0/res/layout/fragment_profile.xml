@@ -5,11 +5,7 @@
     android:orientation="vertical"
     tools:context="cn.ucai.superwechat.ui.ProfileFragment">
 
-    <ScrollView
-        android:id="@+id/profile_scrollview"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        >
+
         <LinearLayout
             android:id="@+id/layout_profile_view"
             android:layout_width="match_parent"
@@ -126,7 +122,7 @@
 
             </RelativeLayout>
         </LinearLayout>
-    </ScrollView>
+
 
 
 </LinearLayout>

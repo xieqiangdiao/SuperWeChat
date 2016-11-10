@@ -5,22 +5,40 @@
     android:background="@color/common_bg"
     android:orientation="vertical" >
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/height_top_bar"
-        android:background="@color/top_bar_normal_bg"
-        android:gravity="center_vertical" >
+	<RelativeLayout
+		android:id="@+id/title"
+		android:layout_width="match_parent"
+		android:layout_height="@dimen/height_top_bar"
+		android:background="@color/top_bar_normal_bg"
+		android:gravity="center_vertical">
 
-        <include layout="@layout/ease_commom_back_btn" />
+		<ImageView
+			android:id="@+id/img_back"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_gravity="center_vertical"
+			android:layout_marginLeft="11dp"
+			android:scaleType="centerInside"
+			android:src="@drawable/ease_mm_title_back" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="@string/group_chat"
-            android:textColor="@color/bottom_text_color_normal"
-            android:textSize="18sp" />
-    </RelativeLayout>
+		<TextView
+			android:id="@+id/txt_title"
+			android:layout_centerHorizontal="true"
+			android:layout_centerVertical="true"
+			android:layout_width="wrap_content"
+			android:layout_height="match_parent"
+			android:textSize="25dp"
+			android:text="群聊"/>
+
+		<ImageView
+			android:id="@+id/img_right"
+			android:layout_alignParentRight="true"
+			android:layout_centerVertical="true"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textSize="20dp"
+			android:src="@drawable/icon_more"/>
+	</RelativeLayout>
 
     <FrameLayout
         android:layout_width="match_parent"
