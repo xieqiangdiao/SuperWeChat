@@ -230,7 +230,7 @@ public class UserProfileActivity extends BaseActivity implements OnClickListener
             case REQUESTCODE_CUTTING:
                 if (data != null) {
                     updateAppUserAvatar(data);
-                    setPicToView(data);
+           //         setPicToView(data);
                 }
                 break;
             default:
@@ -318,6 +318,7 @@ public class UserProfileActivity extends BaseActivity implements OnClickListener
             Drawable drawable = new BitmapDrawable(getResources(), photo);
             userHeadAvatar.setImageDrawable(drawable);
             uploadUserAvatar(Bitmap2Bytes(photo));
+            dialog.dismiss();
         }
 
     }
