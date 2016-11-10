@@ -17,29 +17,32 @@ import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMConversation;
 import com.hyphenate.chat.EMConversation.EMConversationType;
 import com.hyphenate.chat.EMMessage;
+
 import cn.ucai.superwechat.Constant;
 import cn.ucai.superwechat.R;
 import cn.ucai.superwechat.db.InviteMessgeDao;
+
 import com.hyphenate.easeui.model.EaseAtMessageHelper;
 import com.hyphenate.easeui.ui.EaseConversationListFragment;
 import com.hyphenate.easeui.widget.EaseConversationList.EaseConversationListHelper;
 import com.hyphenate.util.NetUtils;
 
-public class ConversationListFragment extends EaseConversationListFragment{
+public class ConversationListFragment extends EaseConversationListFragment {
 
     private TextView errorText;
 
     @Override
     protected void initView() {
         super.initView();
-        View errorView = (LinearLayout) View.inflate(getActivity(),R.layout.em_chat_neterror_item, null);
+        View errorView = (LinearLayout) View.inflate(getActivity(), R.layout.em_chat_neterror_item, null);
         errorItemContainer.addView(errorView);
         errorText = (TextView) errorView.findViewById(R.id.tv_connect_errormsg);
     }
-    
+
     @Override
     protected void setUpView() {
         super.setUpView();
+        hideTitleBar();
         // register context menu
         registerForContextMenu(conversationListView);
         conversationListView.setOnItemClickListener(new OnItemClickListener() {
@@ -53,14 +56,14 @@ public class ConversationListFragment extends EaseConversationListFragment{
                 else {
                     // start chat acitivity
                     Intent intent = new Intent(getActivity(), ChatActivity.class);
-                    if(conversation.isGroup()){
-                        if(conversation.getType() == EMConversationType.ChatRoom){
+                    if (conversation.isGroup()) {
+                        if (conversation.getType() == EMConversationType.ChatRoom) {
                             // it's group chat
                             intent.putExtra(Constant.EXTRA_CHAT_TYPE, Constant.CHATTYPE_CHATROOM);
-                        }else{
+                        } else {
                             intent.putExtra(Constant.EXTRA_CHAT_TYPE, Constant.CHATTYPE_GROUP);
                         }
-                        
+
                     }
                     // it's single chat
                     intent.putExtra(Constant.EXTRA_USER_ID, username);
@@ -97,17 +100,17 @@ public class ConversationListFragment extends EaseConversationListFragment{
     @Override
     protected void onConnectionDisconnected() {
         super.onConnectionDisconnected();
-        if (NetUtils.hasNetwork(getActivity())){
-         errorText.setText(R.string.can_not_connect_chat_server_connection);
+        if (NetUtils.hasNetwork(getActivity())) {
+            errorText.setText(R.string.can_not_connect_chat_server_connection);
         } else {
-          errorText.setText(R.string.the_current_network);
+            errorText.setText(R.string.the_current_network);
         }
     }
-    
-    
+
+
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
-        getActivity().getMenuInflater().inflate(R.menu.em_delete_message, menu); 
+        getActivity().getMenuInflater().inflate(R.menu.em_delete_message, menu);
     }
 
     @Override
@@ -117,14 +120,14 @@ public class ConversationListFragment extends EaseConversationListFragment{
             deleteMessage = true;
         } else if (item.getItemId() == R.id.delete_conversation) {
             deleteMessage = false;
-        }else{
+        } else {
             return false;
         }
-    	EMConversation tobeDeleteCons = conversationListView.getItem(((AdapterContextMenuInfo) item.getMenuInfo()).position);
-    	if (tobeDeleteCons == null) {
-    	    return true;
-    	}
-        if(tobeDeleteCons.getType() == EMConversationType.GroupChat){
+        EMConversation tobeDeleteCons = conversationListView.getItem(((AdapterContextMenuInfo) item.getMenuInfo()).position);
+        if (tobeDeleteCons == null) {
+            return true;
+        }
+        if (tobeDeleteCons.getType() == EMConversationType.GroupChat) {
             EaseAtMessageHelper.get().removeAtMeGroup(tobeDeleteCons.getUserName());
         }
         try {
