@@ -106,6 +106,7 @@ public class EaseConversationList extends ListView {
     	if(!handler.hasMessages(MSG_REFRESH_ADAPTER_DATA)){
     		handler.sendEmptyMessage(MSG_REFRESH_ADAPTER_DATA);
     	}
+
     }
     
     public void filter(CharSequence str) {
