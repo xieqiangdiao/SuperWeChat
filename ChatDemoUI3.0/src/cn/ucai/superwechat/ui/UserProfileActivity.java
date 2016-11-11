@@ -231,7 +231,7 @@ public class UserProfileActivity extends BaseActivity implements OnClickListener
             case REQUESTCODE_CUTTING:
                 if (data != null) {
                     updateAppUserAvatar(data);
-                    //         setPicToView(data);
+                       //      setPicToView(data);
                 }
                 break;
             default:
@@ -326,7 +326,7 @@ public class UserProfileActivity extends BaseActivity implements OnClickListener
     }
 
     private void uploadUserAvatar(final byte[] data) {
-        dialog = ProgressDialog.show(this, getString(R.string.dl_update_photo), getString(R.string.dl_waiting));
+
         new Thread(new Runnable() {
 
             @Override
@@ -350,7 +350,6 @@ public class UserProfileActivity extends BaseActivity implements OnClickListener
             }
         }).start();
 
-        dialog.show();
     }
 
 

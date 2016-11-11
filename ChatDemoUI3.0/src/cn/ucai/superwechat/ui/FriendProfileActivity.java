@@ -22,10 +22,12 @@ import cn.ucai.superwechat.SuperWeChatHelper;
 import cn.ucai.superwechat.bean.Result;
 import cn.ucai.superwechat.data.NetDao;
 import cn.ucai.superwechat.data.OkHttpUtils;
+import cn.ucai.superwechat.utils.L;
 import cn.ucai.superwechat.utils.MFGT;
 import cn.ucai.superwechat.utils.ResultUtils;
 
 public class FriendProfileActivity extends AppCompatActivity {
+    private final static String TAG = FriendProfileActivity.class.getSimpleName();
     String username = null;
     @Bind(R.id.img_back)
     ImageView imgBack;
@@ -94,12 +96,14 @@ public class FriendProfileActivity extends AppCompatActivity {
                 if (s != null) {
                     Result result = ResultUtils.getResultFromJson(s, User.class);
                     if (result != null && result.isRetMsg()) {
-                        user = (User) result.getRetData();
-                        if (user != null) {
-                            setUserInfo();
+                        User u = (User) result.getRetData();
+                        if (u != null) {
+                            L.e(TAG,"u="+u.getAvatar());
                             if (isFriend) {
                                 SuperWeChatHelper.getInstance().saveAppContact(user);
                             }
+                            user=u;
+                            setUserInfo();
                         } else {
                             syncFail();
                         }
@@ -119,9 +123,10 @@ public class FriendProfileActivity extends AppCompatActivity {
     }
 
     private void syncFail() {
-        MFGT.finish(this);
-        return;
-
+        if(!isFriend) {
+            MFGT.finish(this);
+            return;
+        }
     }
 
     public void isFriend(boolean isFriend) {

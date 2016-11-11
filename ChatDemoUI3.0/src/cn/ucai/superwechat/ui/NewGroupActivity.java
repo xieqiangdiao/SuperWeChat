@@ -224,7 +224,7 @@ public class NewGroupActivity extends BaseActivity {
                 if (result != null && result.isRetMsg()) {
                     if (emGroup != null && emGroup.getMembers() != null && emGroup.getMembers().size() > 1) {
                         addGroupMembers();
-                        afterCreateAppGroup();
+
                     }
                     createGroupSuccess();
                 } else {
@@ -270,17 +270,6 @@ public class NewGroupActivity extends BaseActivity {
                 CommonUtils.showShortToast(R.string.Failed_to_create_groups);
             }
         });
-    }
-
-    private void afterCreateAppGroup(String s) {
-        if (s != null) {
-            Result result = ResultUtils.getResultFromJson(s, Group.class);
-            L.e(TAG, "result=" + result);
-            if (result != null && result.isRetMsg()) {
-                Group group = (Group) result.getRetData();
-                createGroupSuccess();
-            }
-        }
     }
 
     private void createGroupSuccess() {

@@ -8,7 +8,9 @@ import com.hyphenate.chat.EMGroup;
 import java.io.File;
 
 import cn.ucai.superwechat.I;
+import cn.ucai.superwechat.SuperWeChatHelper;
 import cn.ucai.superwechat.bean.Result;
+import cn.ucai.superwechat.utils.L;
 import cn.ucai.superwechat.utils.MD5;
 
 
@@ -28,6 +30,7 @@ public class NetDao {
                 .post()
                 .execute(listener);
     }
+
     public static void unregister(Context context, String username, OkHttpUtils.OnCompleteListener<Result> listener) {
         OkHttpUtils<Result> utils = new OkHttpUtils<>(context);
         utils.setRequestUrl(I.REQUEST_UNREGISTER)
@@ -54,30 +57,35 @@ public class NetDao {
                 .targetClass(String.class)
                 .execute(listener);
     }
+
     public static void updateAvatar(Context context, String username, File file, OkHttpUtils.OnCompleteListener<String> listener) {
         OkHttpUtils<String> utils = new OkHttpUtils<>(context);
         utils.setRequestUrl(I.REQUEST_UPDATE_AVATAR)
                 .addParam(I.NAME_OR_HXID, username)
-                .addParam(I.AVATAR_TYPE,I.AVATAR_TYPE_USER_PATH)
+                .addParam(I.AVATAR_TYPE, I.AVATAR_TYPE_USER_PATH)
                 .addFile2(file)
                 .targetClass(String.class)
                 .post()
                 .execute(listener);
     }
+
     public static void syncUserInfo(Context context, String username, OkHttpUtils.OnCompleteListener<String> listener) {
         OkHttpUtils<String> utils = new OkHttpUtils<>(context);
         utils.setRequestUrl(I.REQUEST_FIND_USER)
-                .addParam(I.User.USER_NAME,username)
+                .addParam(I.User.USER_NAME, username)
                 .targetClass(String.class)
                 .execute(listener);
     }
+
     public static void searchUser(Context context, String username, OkHttpUtils.OnCompleteListener<String> listener) {
         OkHttpUtils<String> utils = new OkHttpUtils<>(context);
         utils.setRequestUrl(I.REQUEST_FIND_USER)
-                .addParam(I.User.USER_NAME,username)
+                .addParam(I.User.USER_NAME, username)
                 .targetClass(String.class)
                 .execute(listener);
-    } public static void addContact(Context context, String username, String cusername, OkHttpUtils.OnCompleteListener<String> listener) {
+    }
+
+    public static void addContact(Context context, String username, String cusername, OkHttpUtils.OnCompleteListener<String> listener) {
         OkHttpUtils<String> utils = new OkHttpUtils<>(context);
         utils.setRequestUrl(I.REQUEST_ADD_CONTACT)
                 .addParam(I.Contact.USER_NAME, username)
@@ -85,6 +93,7 @@ public class NetDao {
                 .targetClass(String.class)
                 .execute(listener);
     }
+
     public static void delContact(Context context, String username, String cusername, OkHttpUtils.OnCompleteListener<String> listener) {
         OkHttpUtils<String> utils = new OkHttpUtils<>(context);
         utils.setRequestUrl(I.REQUEST_DELETE_CONTACT)
@@ -93,6 +102,7 @@ public class NetDao {
                 .targetClass(String.class)
                 .execute(listener);
     }
+
     public static void loadContact(Context context, OkHttpUtils.OnCompleteListener<String> listener) {
         OkHttpUtils<String> utils = new OkHttpUtils<>(context);
         utils.setRequestUrl(I.REQUEST_DOWNLOAD_CONTACT_ALL_LIST)
@@ -104,28 +114,46 @@ public class NetDao {
     public static void createGroup(Context context, EMGroup emGroup, OkHttpUtils.OnCompleteListener<String> listener) {
         OkHttpUtils<String> utils = new OkHttpUtils<>(context);
         utils.setRequestUrl(I.REQUEST_CREATE_GROUP)
-                .addParam(I.Group.HX_ID,emGroup.getGroupId())
-                .addParam(I.Group.NAME,emGroup.getGroupName())
-                .addParam(I.Group.DESCRIPTION,emGroup.getDescription())
-                .addParam(I.Group.OWNER,emGroup.getOwner())
-                .addParam(I.Group.IS_PUBLIC,String.valueOf(emGroup.isPublic()))
-                .addParam(I.Group.ALLOW_INVITES,String.valueOf(emGroup.isAllowInvites()))
+                .addParam(I.Group.HX_ID, emGroup.getGroupId())
+                .addParam(I.Group.NAME, emGroup.getGroupName())
+                .addParam(I.Group.DESCRIPTION, emGroup.getDescription())
+                .addParam(I.Group.OWNER, emGroup.getOwner())
+                .addParam(I.Group.IS_PUBLIC, String.valueOf(emGroup.isPublic()))
+                .addParam(I.Group.ALLOW_INVITES, String.valueOf(emGroup.isAllowInvites()))
                 .targetClass(String.class)
                 .post()
                 .execute(listener);
     }
-    public static void createGroup(Context context, EMGroup emGroup,File file, OkHttpUtils.OnCompleteListener<String> listener) {
+
+    public static void createGroup(Context context, EMGroup emGroup, File file, OkHttpUtils.OnCompleteListener<String> listener) {
         OkHttpUtils<String> utils = new OkHttpUtils<>(context);
         utils.setRequestUrl(I.REQUEST_CREATE_GROUP)
-                .addParam(I.Group.HX_ID,emGroup.getGroupId())
-                .addParam(I.Group.NAME,emGroup.getGroupName())
-                .addParam(I.Group.DESCRIPTION,emGroup.getDescription())
-                .addParam(I.Group.OWNER,emGroup.getOwner())
-                .addParam(I.Group.IS_PUBLIC,String.valueOf(emGroup.isPublic()))
-                .addParam(I.Group.ALLOW_INVITES,String.valueOf(emGroup.isAllowInvites()))
+                .addParam(I.Group.HX_ID, emGroup.getGroupId())
+                .addParam(I.Group.NAME, emGroup.getGroupName())
+                .addParam(I.Group.DESCRIPTION, emGroup.getDescription())
+                .addParam(I.Group.OWNER, emGroup.getOwner())
+                .addParam(I.Group.IS_PUBLIC, String.valueOf(emGroup.isPublic()))
+                .addParam(I.Group.ALLOW_INVITES, String.valueOf(emGroup.isAllowInvites()))
                 .targetClass(String.class)
                 .addFile2(file)
                 .post()
+                .execute(listener);
+    }
+
+    public static void addGroupMebers(Context context, EMGroup emGroup, OkHttpUtils.OnCompleteListener<String> listener) {
+        String memberArr = "";
+        for (String m : emGroup.getMembers()) {
+            if (!m.equals(SuperWeChatHelper.getInstance().getCurrentUser())) {
+                memberArr += m + ",";
+            }
+        }
+        memberArr =memberArr.substring(0,memberArr.length()-1);
+        L.e("addGroupMembers","memberArr="+memberArr);
+        OkHttpUtils<String> utils=new OkHttpUtils<>(context);
+        utils.setRequestUrl(I.REQUEST_ADD_GROUP_MEMBER)
+                .addParam(I.Member.GROUP_HX_ID,emGroup.getGroupId())
+                .addParam(I.Member.USER_NAME,memberArr)
+                .targetClass(String.class)
                 .execute(listener);
     }
 }
