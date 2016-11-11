@@ -133,7 +133,8 @@ public class ContactListFragment extends EaseContactListFragment {
                 if (user != null) {
                     String username = user.getUsername();
                     // demo中直接进入聊天页面，实际一般是进入用户详情页
-                    startActivity(new Intent(getActivity(), ChatActivity.class).putExtra("userId", username));
+                    MFGT.gotoFrendProfile(getActivity(),username);
+                  //  startActivity(new Intent(getActivity(), ChatActivity.class).putExtra("userId", username));
                 }
             }
         });
@@ -241,7 +242,7 @@ public class ContactListFragment extends EaseContactListFragment {
     /**
      * delete contact
      *
-     * @param toDeleteUser
+     * @param deleteContact
      */
     public void deleteContact(final EaseUser tobeDeleteUser) {
         String st1 = getResources().getString(R.string.deleting);

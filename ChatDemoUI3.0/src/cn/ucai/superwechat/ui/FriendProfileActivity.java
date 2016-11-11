@@ -19,10 +19,14 @@ import butterknife.OnClick;
 import cn.ucai.superwechat.I;
 import cn.ucai.superwechat.R;
 import cn.ucai.superwechat.SuperWeChatHelper;
+import cn.ucai.superwechat.bean.Result;
+import cn.ucai.superwechat.data.NetDao;
+import cn.ucai.superwechat.data.OkHttpUtils;
 import cn.ucai.superwechat.utils.MFGT;
+import cn.ucai.superwechat.utils.ResultUtils;
 
 public class FriendProfileActivity extends AppCompatActivity {
-    User user;
+    String username = null;
     @Bind(R.id.img_back)
     ImageView imgBack;
     @Bind(R.id.tv_title)
@@ -41,18 +45,34 @@ public class FriendProfileActivity extends AppCompatActivity {
     Button butSendMsg;
     @Bind(R.id.butSendVideo)
     Button butSendVideo;
-
+    User user = null;
+    boolean isFriend;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_firend_profile);
         ButterKnife.bind(this);
-        user = (User) getIntent().getSerializableExtra(I.User.USER_NAME);
-        if (user == null) {
+        username = getIntent().getStringExtra(I.User.USER_NAME);
+        if (username == null) {
             MFGT.finish(this);
         }
         initView();
+        user = SuperWeChatHelper.getInstance().getAppContactList().get(user);
+        if (user == null) {
+            synclserInfo();
+            isFriend=false;
+        } else {
+            setUserInfo();
+            isFriend=true;
+        }
+        isFriend(isFriend);
+        syncUserInfo();
+    }
+
+    private void synclserInfo() {
+        MFGT.finish(this);
+        return;
     }
 
     private void initView() {
@@ -60,19 +80,56 @@ public class FriendProfileActivity extends AppCompatActivity {
         tvTitle.setVisibility(View.VISIBLE);
         tvTitle.setText(getString(R.string.userinfo_txt_profile));
         setUserInfo();
-        isFriend();
+
     }
 
     private void setUserInfo() {
         EaseUserUtils.setAppUserAvatar(this, user.getMUserName(), imgPop);
-        EaseUserUtils.setAppUserNick( user.getMUserNick(), tvUserInfoNick);
+        EaseUserUtils.setAppUserNick(user.getMUserNick(), tvUserInfoNick);
         EaseUserUtils.setAppUserNameWithNo(user.getMUserName(), tvUserName);
 
     }
 
+    private void syncUserInfo() {
+        NetDao.syncUserInfo(this, username, new OkHttpUtils.OnCompleteListener<String>() {
+            @Override
+            public void onSuccess(String s) {
+                if (s != null) {
+                    Result result = ResultUtils.getResultFromJson(s, User.class);
+                    if (result != null && result.isRetMsg()) {
+                        user = (User) result.getRetData();
+                        if (user != null) {
+                            setUserInfo();
+                            if(isFriend){
+                                SuperWeChatHelper.getInstance().saveAppContact(user);
+                            }
+                        } else {
+                            syncFail();
+                        }
+                    } else {
+                        syncFail();
+                    }
+                } else {
+                    syncFail();
+                }
+            }
 
-    public void isFriend() {
-        if (SuperWeChatHelper.getInstance().getAppContactList().containsKey(user.getMUserName())) {
+            @Override
+            public void onError(String error) {
+                syncFail();
+            }
+        });
+    }
+
+    private void syncFail() {
+
+        MFGT.finish(this);
+        return;
+
+    }
+
+    public void isFriend(boolean isFriend) {
+        if (isFriend) {
             butSendMsg.setVisibility(View.VISIBLE);
             butSendVideo.setVisibility(View.VISIBLE);
         } else {
@@ -88,10 +145,10 @@ public class FriendProfileActivity extends AppCompatActivity {
                 MFGT.finish(this);
                 break;
             case R.id.add_contact:
-               MFGT.gotoAddFrendrofile(this,user.getMUserName());
+                MFGT.gotoAddFrendrofile(this, user.getMUserName());
                 break;
             case R.id.butSendMsg:
-                MFGT.gotoChat(this,user.getMUserName());
+                MFGT.gotoChat(this, user.getMUserName());
                 break;
             case R.id.butSendVideo:
                 if (!EMClient.getInstance().isConnected())
