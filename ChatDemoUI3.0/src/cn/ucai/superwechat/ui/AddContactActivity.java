@@ -162,7 +162,7 @@ public class AddContactActivity extends BaseActivity {
                     if (result != null && result.isRetMsg()) {
                         User user = (User) result.getRetData();
                         if (user != null) {
-                            MFGT.gotoFrendProfile(AddContactActivity.this,user);
+                            MFGT.gotoFrendProfile(AddContactActivity.this,user.getMUserName());
                         }
                     } else {
                         CommonUtils.showShortToast(R.string.msg_104);
