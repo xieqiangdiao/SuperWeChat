@@ -56,30 +56,27 @@ public class FriendProfileActivity extends AppCompatActivity {
         username = getIntent().getStringExtra(I.User.USER_NAME);
         if (username == null) {
             MFGT.finish(this);
+            return;
         }
         initView();
-        user = SuperWeChatHelper.getInstance().getAppContactList().get(user);
+        user = SuperWeChatHelper.getInstance().getAppContactList().get(username);
         if (user == null) {
-            synclserInfo();
-            isFriend=false;
+            isFriend = false;
         } else {
             setUserInfo();
-            isFriend=true;
+            isFriend = true;
         }
         isFriend(isFriend);
         syncUserInfo();
     }
 
-    private void synclserInfo() {
-        MFGT.finish(this);
-        return;
-    }
+
 
     private void initView() {
         imgBack.setVisibility(View.VISIBLE);
         tvTitle.setVisibility(View.VISIBLE);
         tvTitle.setText(getString(R.string.userinfo_txt_profile));
-        setUserInfo();
+
 
     }
 
@@ -100,7 +97,7 @@ public class FriendProfileActivity extends AppCompatActivity {
                         user = (User) result.getRetData();
                         if (user != null) {
                             setUserInfo();
-                            if(isFriend){
+                            if (isFriend) {
                                 SuperWeChatHelper.getInstance().saveAppContact(user);
                             }
                         } else {
@@ -122,7 +119,6 @@ public class FriendProfileActivity extends AppCompatActivity {
     }
 
     private void syncFail() {
-
         MFGT.finish(this);
         return;
 
