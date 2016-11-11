@@ -153,5 +153,7 @@ public class Group implements Serializable{
 				+ ", mgroupMaxUsers=" + mgroupMaxUsers + ", mgroupAffiliationsCount=" + mgroupAffiliationsCount
 				+ ", mgroupIsPublic=" + mgroupIsPublic + ", mgroupAllowInvites=" + mgroupAllowInvites + "]";
 	}
-	
+	public void getAvatar(String hxid){
+
+	}
 }
