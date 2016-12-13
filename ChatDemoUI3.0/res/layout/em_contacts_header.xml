@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
     <cn.ucai.superwechat.widget.ContactItemView
         android:id="@+id/application_item"
@@ -19,5 +19,13 @@
         app:contactItemImage="@drawable/em_groups_icon"
         app:contactItemName="@string/group_chat" />
 
+    <cn.ucai.superwechat.widget.ContactItemView
+        android:id="@+id/chat_room_item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:contactItemImage="@drawable/em_group_icon"
+        app:contactItemName="聊天室">
+
+    </cn.ucai.superwechat.widget.ContactItemView>
 
 </LinearLayout>
